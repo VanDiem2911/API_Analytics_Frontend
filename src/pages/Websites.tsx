@@ -92,7 +92,7 @@ export default function Websites() {
 
         <button
           onClick={() => setIsAdding(!isAdding)}
-          className="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-1.5 transition-all duration-150"
+          className="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-1.5 transition-all duration-150 shadow-lg shadow-red-600/10"
         >
           <Plus className="w-4 h-4" />
           {isAdding ? "Hủy bỏ" : "Thêm Website"}
@@ -118,7 +118,7 @@ export default function Websites() {
                 placeholder="My Application"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 px-3 text-xs text-gray-100 placeholder-gray-600 focus:outline-none focus:border-sky-500"
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 px-3 text-xs text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                 required
               />
             </div>
@@ -130,7 +130,7 @@ export default function Websites() {
                 placeholder="example.com"
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 px-3 text-xs text-gray-100 placeholder-gray-600 focus:outline-none focus:border-sky-500"
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 px-3 text-xs text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                 required
               />
             </div>
@@ -138,7 +138,7 @@ export default function Websites() {
             <button
               type="submit"
               disabled={createMutation.isPending}
-              className="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold text-xs py-2 px-4 rounded-lg transition-all duration-150 disabled:opacity-50 h-9"
+              className="bg-red-600 hover:bg-red-500 text-white font-bold text-xs py-2 px-4 rounded-lg transition-all duration-150 disabled:opacity-50 h-9 shadow-lg shadow-red-600/10"
             >
               {createMutation.isPending ? "Đang tạo..." : "Xác nhận tạo"}
             </button>
@@ -178,7 +178,7 @@ export default function Websites() {
                       href={`https://${web.domain}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-sky-400 hover:underline flex items-center gap-1 mt-1"
+                      className="text-xs text-red-500 hover:underline flex items-center gap-1 mt-1 font-medium"
                     >
                       <Globe className="w-3.5 h-3.5" />
                       {web.domain}
@@ -212,7 +212,7 @@ export default function Websites() {
               <div className="flex gap-2 border-t border-gray-800/50 pt-4 mt-6">
                 <button
                   onClick={() => setSelectedWeb(web)}
-                  className="flex-1 bg-gray-900 hover:bg-gray-800 border border-gray-800/80 hover:border-sky-500/30 text-gray-300 hover:text-sky-400 font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150"
+                  className="flex-1 bg-gray-900 hover:bg-gray-800 border border-gray-800/80 hover:border-red-500/30 text-gray-300 hover:text-red-500 font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150"
                 >
                   <Code2 className="w-4 h-4" />
                   Mã tích hợp

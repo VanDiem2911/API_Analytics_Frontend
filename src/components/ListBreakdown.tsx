@@ -55,7 +55,7 @@ export default function ListBreakdown({
               >
                 {/* Horizontal Relative Background Bar */}
                 <div
-                  className="absolute left-0 top-0 bottom-0 bg-sky-500/10 rounded-l-lg transition-all duration-500"
+                  className="absolute left-0 top-0 bottom-0 bg-red-500/10 rounded-l-lg transition-all duration-500"
                   style={{ width: `${percentage}%` }}
                 ></div>
 
@@ -67,7 +67,7 @@ export default function ListBreakdown({
                   <div className="hidden group-hover:flex items-center gap-1.5 ml-2">
                     <button
                       onClick={() => copyToClipboard(item.name)}
-                      className="p-1 text-gray-400 hover:text-sky-400 hover:bg-gray-800 rounded transition-all duration-150"
+                      className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
                       title="Sao chép"
                     >
                       <Copy className="w-3 h-3" />
@@ -75,7 +75,7 @@ export default function ListBreakdown({
                     {onFilterClick && (
                       <button
                         onClick={() => onFilterClick(item.name)}
-                        className="p-1 text-gray-400 hover:text-sky-400 hover:bg-gray-800 rounded transition-all duration-150"
+                        className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
                         title="Lọc theo mục này"
                       >
                         <Filter className="w-3 h-3" />

@@ -34,7 +34,7 @@ export default function CardMetric({
       {/* Top Section: Title & Icon */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm text-gray-400 font-medium">{title}</span>
-        <div className="bg-gray-800/60 p-2 rounded-lg text-sky-400 border border-gray-700/30">
+        <div className="bg-gray-800/60 p-2 rounded-lg text-red-500 border border-gray-700/30">
           {Icon ? <Icon className="w-5 h-5" /> : <Users2 className="w-5 h-5" />}
         </div>
       </div>

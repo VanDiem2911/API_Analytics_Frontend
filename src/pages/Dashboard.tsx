@@ -166,7 +166,7 @@ export default function Dashboard() {
         <p className="text-xs text-gray-500 mt-1 mb-6">Bạn cần đăng ký ít nhất một website để xem bảng thống kê</p>
         <button
           onClick={() => navigate("/websites")}
-          className="bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold text-xs px-5 py-2.5 rounded-lg transition-all duration-150"
+          className="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-5 py-2.5 rounded-lg transition-all duration-150 shadow-lg shadow-red-600/10"
         >
           Đi tới trang đăng ký Website
         </button>
@@ -181,11 +181,11 @@ export default function Dashboard() {
         
         {/* Left Side: Website selection */}
         <div className="flex items-center gap-3">
-          <Globe className="w-5 h-5 text-sky-400 flex-shrink-0" />
+          <Globe className="w-5 h-5 text-red-500 flex-shrink-0" />
           <select
             value={selectedWebId}
             onChange={(e) => handleWebsiteChange(e.target.value)}
-            className="bg-gray-950 border border-gray-800 text-sm text-gray-200 py-1.5 px-3 rounded-lg focus:outline-none focus:border-sky-500 font-semibold"
+            className="bg-gray-950 border border-gray-800 text-sm text-gray-200 py-1.5 px-3 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 font-semibold"
           >
             {websites.map((web: any) => (
               <option key={web._id} value={web._id}>
@@ -196,7 +196,7 @@ export default function Dashboard() {
 
           <button
             onClick={handleRefreshAll}
-            className="p-2 text-gray-400 hover:text-sky-400 hover:bg-gray-800/40 rounded-lg transition-all duration-150"
+            className="p-2 text-gray-400 hover:text-red-500 hover:bg-gray-800/40 rounded-lg transition-all duration-150"
             title="Làm mới dữ liệu"
           >
             <RefreshCw className="w-4 h-4" />
@@ -210,7 +210,7 @@ export default function Dashboard() {
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
-              className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1.5 px-2.5 rounded-lg focus:outline-none focus:border-sky-500"
+              className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1.5 px-2.5 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             >
               <option value="today">Hôm nay</option>
               <option value="yesterday">Hôm qua</option>
@@ -230,14 +230,14 @@ export default function Dashboard() {
                 type="date"
                 value={customStart}
                 onChange={(e) => setCustomStart(e.target.value)}
-                className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1 px-2 rounded focus:outline-none focus:border-sky-500"
+                className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1 px-2 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               />
               <span className="text-gray-600 text-xs">-</span>
               <input
                 type="date"
                 value={customEnd}
                 onChange={(e) => setCustomEnd(e.target.value)}
-                className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1 px-2 rounded focus:outline-none focus:border-sky-500"
+                className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1 px-2 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               />
             </div>
           )}
@@ -246,13 +246,13 @@ export default function Dashboard() {
 
       {/* Active Filter Tags */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center gap-2 bg-sky-500/5 border border-sky-500/10 px-4 py-2.5 rounded-xl">
-          <span className="text-[10px] text-sky-400 uppercase tracking-wider font-bold mr-2">
+        <div className="flex flex-wrap items-center gap-2 bg-red-500/5 border border-red-500/10 px-4 py-2.5 rounded-xl">
+          <span className="text-[10px] text-red-500 font-bold uppercase tracking-wider mr-2">
             Đang lọc:
           </span>
 
           {deviceFilter && (
-            <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
+            <span className="flex items-center gap-1 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-semibold px-2 py-0.5 rounded-md">
               Thiết bị: {deviceFilter}
               <button onClick={() => setDeviceFilter("")} className="hover:text-red-400">
                 <X className="w-3 h-3" />
@@ -261,7 +261,7 @@ export default function Dashboard() {
           )}
 
           {countryFilter && (
-            <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
+            <span className="flex items-center gap-1 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-semibold px-2 py-0.5 rounded-md">
               Quốc gia: {countryFilter}
               <button onClick={() => setCountryFilter("")} className="hover:text-red-400">
                 <X className="w-3 h-3" />
@@ -270,7 +270,7 @@ export default function Dashboard() {
           )}
 
           {pageFilter && (
-            <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
+            <span className="flex items-center gap-1 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-semibold px-2 py-0.5 rounded-md">
               Trang: {pageFilter}
               <button onClick={() => setPageFilter("")} className="hover:text-red-400">
                 <X className="w-3 h-3" />

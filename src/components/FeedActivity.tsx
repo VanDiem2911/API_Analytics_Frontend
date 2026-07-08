@@ -59,8 +59,8 @@ export default function FeedActivity({ feed }: FeedActivityProps) {
           <h4 className="text-lg font-bold text-white">Hoạt động thời gian thực</h4>
           <p className="text-xs text-gray-400 font-medium">Theo dõi các hành động gần đây của khách truy cập</p>
         </div>
-        <div className="flex items-center gap-1.5 bg-sky-500/10 border border-sky-500/20 px-2 py-1 rounded-md text-[10px] text-sky-400 font-bold uppercase tracking-wider">
-          <span className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-pulse"></span>
+        <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 px-2 py-1 rounded-md text-[10px] text-red-500 font-bold uppercase tracking-wider shadow-sm shadow-red-500/5">
+          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
           Realtime
         </div>
       </div>

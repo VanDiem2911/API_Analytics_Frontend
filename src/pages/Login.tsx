@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Mail, Lock, ArrowRight } from "lucide-react";
 import { authApi } from "../lib/api";
-import { BarChart3, Mail, Lock, ArrowRight } from "lucide-react";
+import Logo from "../components/Logo";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -42,18 +43,16 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950 p-4 relative overflow-hidden font-sans">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Login Card */}
       <div className="glass w-full max-w-md p-8 rounded-2xl relative z-10 shadow-2xl">
         {/* Brand Header */}
         <div className="flex flex-col items-center mb-8">
-          <div className="bg-sky-500 text-gray-950 p-3 rounded-xl shadow-lg shadow-sky-500/20 mb-3">
-            <BarChart3 className="w-8 h-8" />
-          </div>
+          <Logo className="w-16 h-16 shadow-xl shadow-red-600/20 mb-3" />
           <h2 className="text-2xl font-bold text-white tracking-tight">Chào mừng quay trở lại</h2>
-          <p className="text-xs text-gray-400 mt-1">Đăng nhập tài khoản KPI Analytics của bạn</p>
+          <p className="text-xs text-gray-400 mt-1">Đăng nhập tài khoản DUDI Analytics của bạn</p>
         </div>
 
         {/* Error Notification */}
@@ -77,7 +76,7 @@ export default function Login() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-200"
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -95,7 +94,7 @@ export default function Login() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-200"
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -105,7 +104,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-sky-500 hover:bg-sky-400 text-gray-950 font-bold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all duration-150 disabled:opacity-50"
+            className="w-full bg-red-600 hover:bg-red-500 text-white font-bold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 transition-all duration-150 disabled:opacity-50 shadow-lg shadow-red-600/10"
           >
             {isLoading ? "Đang xử lý..." : "Đăng nhập ngay"}
             <ArrowRight className="w-4 h-4" />
@@ -132,7 +131,7 @@ export default function Login() {
               }
             }}
             disabled={isLoading}
-            className="w-full bg-gray-900/60 hover:bg-gray-800 text-sky-400 border border-sky-500/20 font-bold text-xs py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150 disabled:opacity-50"
+            className="w-full bg-gray-900/60 hover:bg-gray-800 text-red-500 border border-red-500/20 font-bold text-xs py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150 disabled:opacity-50"
           >
             Đăng nhập nhanh (Admin Demo)
           </button>
@@ -141,7 +140,7 @@ export default function Login() {
         {/* Register Redirect link */}
         <div className="mt-8 text-center text-xs text-gray-400">
           Chưa có tài khoản?{" "}
-          <Link to="/register" className="text-sky-400 hover:underline font-semibold ml-1">
+          <Link to="/register" className="text-red-500 hover:underline font-semibold ml-1">
             Đăng ký tài khoản mới
           </Link>
         </div>

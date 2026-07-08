@@ -11,7 +11,7 @@ interface ChartPieBreakdownProps {
   data: BreakdownItem[];
 }
 
-const COLORS = ["#0ea5e9", "#a855f7", "#10b981", "#f59e0b", "#ef4444", "#3b82f6", "#ec4899"];
+const COLORS = ["#E51924", "#f43f5e", "#f97316", "#eab308", "#cbd5e1", "#fda4af", "#b91c1c"];
 
 export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBreakdownProps) {
   const total = data.reduce((acc, curr) => acc + curr.count, 0);
@@ -31,7 +31,7 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
           </div>
           <div className="flex gap-4 items-center justify-between text-xs py-0.5">
             <span className="text-gray-400">Tỷ lệ:</span>
-            <span className="font-semibold text-sky-400">{percentage}%</span>
+            <span className="font-semibold text-red-500">{percentage}%</span>
           </div>
         </div>
       );
@@ -97,7 +97,7 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
                   </div>
                   <div className="flex items-center gap-3 text-right">
                     <span className="text-gray-400 font-bold">{item.count.toLocaleString()}</span>
-                    <span className="text-sky-400 font-semibold w-10">{pct}%</span>
+                    <span className="text-red-500 font-bold w-10">{pct}%</span>
                   </div>
                 </div>
               );

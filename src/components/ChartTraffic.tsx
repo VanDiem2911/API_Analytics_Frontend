@@ -58,7 +58,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("all")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "all" ? "bg-sky-500 text-gray-950 font-semibold" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "all" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
             }`}
           >
             Tất cả
@@ -66,7 +66,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("pv")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "pv" ? "bg-sky-500 text-gray-950 font-semibold" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "pv" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
             }`}
           >
             Lượt xem
@@ -74,7 +74,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("uv")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "uv" ? "bg-sky-500 text-gray-950 font-semibold" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "uv" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
             }`}
           >
             Khách
@@ -82,7 +82,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("sess")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "sess" ? "bg-sky-500 text-gray-950 font-semibold" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "sess" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
             }`}
           >
             Phiên
@@ -97,8 +97,8 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
             {/* Glow Color Gradients definition */}
             <defs>
               <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.25} />
-                <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                <stop offset="5%" stopColor="#dc2626" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#dc2626" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#a855f7" stopOpacity={0.25} />
@@ -135,7 +135,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
                 type="monotone"
                 name="pageViews"
                 dataKey="pageViews"
-                stroke="#0ea5e9"
+                stroke="#dc2626"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorPv)"

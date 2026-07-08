@@ -60,7 +60,7 @@ Tracker.init({
 
         <h3 className="text-lg font-bold text-white mb-2">Mã tích hợp SDK</h3>
         <p className="text-xs text-gray-400 mb-6">
-          Website: <span className="text-sky-400 font-semibold">{website.name}</span> ({website.domain})
+          Website: <span className="text-red-500 font-semibold">{website.name}</span> ({website.domain})
         </p>
 
         {/* API Key section */}
@@ -69,10 +69,10 @@ Tracker.init({
             API Key của dự án
           </label>
           <div className="flex gap-2 bg-gray-900 border border-gray-800 p-2.5 rounded-lg items-center justify-between">
-            <code className="text-xs text-sky-400 font-mono select-all truncate">{website.apiKey}</code>
+            <code className="text-xs text-red-500 font-mono select-all truncate">{website.apiKey}</code>
             <button
               onClick={copyKey}
-              className="flex-shrink-0 p-1 text-gray-400 hover:text-sky-400 hover:bg-gray-800 rounded transition-all duration-150"
+              className="flex-shrink-0 p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
               title="Sao chép API Key"
             >
               {copiedKey ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -92,7 +92,7 @@ Tracker.init({
                 onClick={() => {
                   navigator.clipboard.writeText("npm install kpi-tracker-vandiem");
                 }}
-                className="p-1 text-gray-400 hover:text-sky-400 hover:bg-gray-800 rounded transition-all duration-150"
+                className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
               >
                 <Copy className="w-4 h-4" />
               </button>
@@ -104,7 +104,7 @@ Tracker.init({
               <span className="text-[10px] text-gray-500 font-medium">Bước 2: Import và Init SDK</span>
               <button
                 onClick={copyCode}
-                className="flex items-center gap-1 text-[10px] text-sky-400 hover:text-sky-300 font-semibold"
+                className="flex items-center gap-1 text-[10px] text-red-500 hover:text-red-400 font-semibold"
               >
                 {copiedCode ? (
                   <>
@@ -129,7 +129,7 @@ Tracker.init({
         <div className="mt-6 flex justify-end">
           <button
             onClick={onClose}
-            className="bg-sky-500 text-gray-950 font-bold text-xs px-4 py-2 rounded-lg hover:bg-sky-400 transition-all duration-150"
+            className="bg-red-600 text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-red-500 transition-all duration-150 shadow-lg shadow-red-600/10"
           >
             Đã tích hợp xong
           </button>

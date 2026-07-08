@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, Globe, LogOut, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Globe, LogOut } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Layout() {
   const location = useLocation();
@@ -25,14 +26,12 @@ export default function Layout() {
         <div>
           {/* Logo Brand Header */}
           <div className="flex items-center gap-3 px-2 py-4 mb-6">
-            <div className="bg-sky-500 text-gray-950 p-2 rounded-lg shadow-md shadow-sky-500/20">
-              <BarChart3 className="w-6 h-6" />
-            </div>
+            <Logo className="w-10 h-10 shadow-lg shadow-red-600/10" />
             <div>
-              <h1 className="font-bold text-lg leading-tight bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">
-                KPI Analytics
+              <h1 className="font-bold text-base leading-tight text-white">
+                DUDI Software
               </h1>
-              <span className="text-[10px] text-gray-400 font-medium tracking-wider uppercase">
+              <span className="text-[9px] text-red-500 font-bold tracking-wider uppercase">
                 Tracker Dashboard
               </span>
             </div>
@@ -49,7 +48,7 @@ export default function Layout() {
                   to={item.path}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? "bg-sky-500/10 text-sky-400 border border-sky-500/20 shadow-[0_0_15px_-3px_rgba(14,165,233,0.15)]"
+                      ? "bg-red-500/10 text-red-500 border border-red-500/20 shadow-[0_0_15px_-3px_rgba(239,68,68,0.15)]"
                       : "text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 border border-transparent"
                   }`}
                 >
@@ -66,7 +65,7 @@ export default function Layout() {
           <div className="flex items-center justify-between px-2 mb-3">
             <div className="overflow-hidden">
               <p className="text-sm font-semibold text-gray-200 truncate">{fullName}</p>
-              <span className="text-[10px] text-sky-400 font-medium tracking-wide uppercase">
+              <span className="text-[10px] text-red-500 font-bold tracking-wide uppercase">
                 {localStorage.getItem("analytics_user_role") || "USER"}
               </span>
             </div>
