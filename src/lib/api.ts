@@ -21,6 +21,24 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Automatically handle 401 Unauthorized errors (expired/invalid sessions)
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      const url = error.config?.url;
+      // Do not redirect if it's the login route itself
+      if (url && !url.includes("/api/auth/login")) {
+        localStorage.removeItem("analytics_token");
+        localStorage.removeItem("analytics_user_name");
+        localStorage.removeItem("analytics_user_role");
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Auth APIs
 export const authApi = {
   login: async (credentials: any) => {
