@@ -177,7 +177,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Top Controls Bar */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-gray-900/20 border border-gray-800/40 p-4 rounded-xl backdrop-blur-md">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-white border border-gray-200/80 p-4 rounded-xl shadow-sm">
         
         {/* Left Side: Website selection */}
         <div className="flex items-center gap-3">
@@ -185,7 +185,7 @@ export default function Dashboard() {
           <select
             value={selectedWebId}
             onChange={(e) => handleWebsiteChange(e.target.value)}
-            className="bg-gray-950 border border-gray-800 text-sm text-gray-200 py-1.5 px-3 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 font-semibold"
+            className="bg-white border border-gray-200 text-sm text-gray-800 py-1.5 px-3 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 font-semibold shadow-sm cursor-pointer"
           >
             {websites.map((web: any) => (
               <option key={web._id} value={web._id}>
@@ -196,7 +196,7 @@ export default function Dashboard() {
 
           <button
             onClick={handleRefreshAll}
-            className="p-2 text-gray-400 hover:text-red-500 hover:bg-gray-800/40 rounded-lg transition-all duration-150"
+            className="p-2 text-gray-500 hover:text-red-600 hover:bg-gray-50 rounded-lg border border-gray-200 bg-white transition-all duration-150 shadow-sm"
             title="Làm mới dữ liệu"
           >
             <RefreshCw className="w-4 h-4" />
@@ -206,11 +206,11 @@ export default function Dashboard() {
         {/* Right Side: Period selection */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-gray-400" />
+            <Calendar className="w-4 h-4 text-gray-500" />
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
-              className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1.5 px-2.5 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              className="bg-white border border-gray-200 text-xs text-gray-700 py-1.5 px-2.5 rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 shadow-sm cursor-pointer"
             >
               <option value="today">Hôm nay</option>
               <option value="yesterday">Hôm qua</option>
@@ -230,14 +230,14 @@ export default function Dashboard() {
                 type="date"
                 value={customStart}
                 onChange={(e) => setCustomStart(e.target.value)}
-                className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1 px-2 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                className="bg-white border border-gray-200 text-xs text-gray-700 py-1 px-2 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 shadow-sm"
               />
-              <span className="text-gray-600 text-xs">-</span>
+              <span className="text-gray-400 text-xs">-</span>
               <input
                 type="date"
                 value={customEnd}
                 onChange={(e) => setCustomEnd(e.target.value)}
-                className="bg-gray-950 border border-gray-800 text-xs text-gray-300 py-1 px-2 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                className="bg-white border border-gray-200 text-xs text-gray-700 py-1 px-2 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 shadow-sm"
               />
             </div>
           )}
@@ -280,7 +280,7 @@ export default function Dashboard() {
 
           <button
             onClick={clearAllFilters}
-            className="text-[10px] text-gray-400 hover:text-gray-200 underline font-semibold ml-auto transition-all"
+            className="text-[10px] text-gray-500 hover:text-gray-800 underline font-semibold ml-auto transition-all"
           >
             Xóa tất cả bộ lọc
           </button>
@@ -327,7 +327,7 @@ export default function Dashboard() {
         {/* Trend line Chart - 2/3 width on large screens */}
         <div className="lg:col-span-2">
           {isChartsLoading ? (
-            <div className="glass h-[400px] flex items-center justify-center text-sm text-gray-500 rounded-xl">
+            <div className="card h-[400px] flex items-center justify-center text-sm text-gray-500">
               Đang vẽ biểu đồ xu hướng...
             </div>
           ) : (
@@ -337,10 +337,10 @@ export default function Dashboard() {
 
         {/* Realtime online active users count + details */}
         <div>
-          <div className="glass p-6 rounded-xl flex flex-col justify-between h-full min-h-[400px]">
+          <div className="card flex flex-col justify-between h-full min-h-[400px]">
             <div>
-              <h4 className="text-lg font-bold text-white mb-2">Đang truy cập</h4>
-              <p className="text-xs text-gray-400 mb-6">Thống kê số lượng phiên truy cập trực tiếp ngay bây giờ</p>
+              <h4 className="text-lg font-bold text-gray-900 mb-2">Đang truy cập</h4>
+              <p className="text-xs text-gray-500 mb-6">Thống kê số lượng phiên truy cập trực tiếp ngay bây giờ</p>
             </div>
 
             <div className="flex flex-col items-center justify-center my-6">
@@ -348,13 +348,13 @@ export default function Dashboard() {
                 {/* Pulsing glow circles behind number */}
                 <span className="absolute w-24 h-24 rounded-full bg-emerald-500/10 animate-ping"></span>
                 <span className="absolute w-16 h-16 rounded-full bg-emerald-500/20 animate-pulse-slow"></span>
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
-                  <Users className="w-6 h-6 text-emerald-400" />
+                <div className="w-12 h-12 rounded-full bg-emerald-500/15 flex items-center justify-center border border-emerald-500/20">
+                  <Users className="w-6 h-6 text-emerald-600" />
                 </div>
               </div>
-              <span className="text-5xl font-black tracking-tight text-white">{onlineCount}</span>
-              <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider mt-2 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="text-5xl font-black tracking-tight text-gray-950">{onlineCount}</span>
+              <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider mt-2 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Người dùng Online
               </span>
             </div>
@@ -367,8 +367,8 @@ export default function Dashboard() {
               ) : (
                 activePagesRealtime.map((ap: any, index: number) => (
                   <div key={index} className="flex justify-between items-center text-xs">
-                    <span className="text-gray-300 font-medium truncate max-w-[80%]">{ap.url}</span>
-                    <span className="font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                    <span className="text-gray-700 font-medium truncate max-w-[80%]">{ap.url}</span>
+                    <span className="font-bold text-emerald-600 bg-emerald-500/10 px-1.5 py-0.5 rounded">
                       {ap.count}
                     </span>
                   </div>
@@ -409,6 +409,7 @@ export default function Dashboard() {
             columnName="Tên quốc gia"
             data={breakdowns.countries}
             onFilterClick={setCountryFilter}
+            heightClass="h-[520px]"
           />
         </div>
         <div className="lg:col-span-2">

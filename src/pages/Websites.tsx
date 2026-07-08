@@ -101,8 +101,8 @@ export default function Websites() {
 
       {/* Add New Website Card */}
       {isAdding && (
-        <div className="glass p-6 rounded-xl animate-in slide-in-from-top-4 duration-200">
-          <h3 className="text-sm font-bold text-white mb-4">Thêm Website mới vào hệ thống</h3>
+        <div className="card animate-in slide-in-from-top-4 duration-200">
+          <h3 className="text-sm font-bold text-gray-900 mb-4">Thêm Website mới vào hệ thống</h3>
           
           {errorMsg && (
             <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs px-4 py-2.5 rounded-lg mb-4">
@@ -118,7 +118,7 @@ export default function Websites() {
                 placeholder="My Application"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 px-3 text-xs text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                className="w-full bg-white border border-gray-200 rounded-lg py-2 px-3 text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                 required
               />
             </div>
@@ -130,7 +130,7 @@ export default function Websites() {
                 placeholder="example.com"
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 px-3 text-xs text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                className="w-full bg-white border border-gray-200 rounded-lg py-2 px-3 text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                 required
               />
             </div>
@@ -155,13 +155,13 @@ export default function Websites() {
           Không thể lấy danh sách website. Vui lòng tải lại trang!
         </div>
       ) : websites.length === 0 ? (
-        <div className="glass py-20 text-center rounded-xl">
-          <Globe className="w-12 h-12 text-gray-700 mx-auto mb-3" />
-          <p className="text-sm font-semibold text-gray-400">Bạn chưa đăng ký website nào</p>
+        <div className="card py-20 text-center">
+          <Globe className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+          <p className="text-sm font-semibold text-gray-650">Bạn chưa đăng ký website nào</p>
           <p className="text-xs text-gray-500 mt-1 mb-4">Đăng ký website đầu tiên để bắt đầu theo dõi lưu lượng</p>
           <button
             onClick={() => setIsAdding(true)}
-            className="bg-gray-800 hover:bg-gray-700 border border-gray-700/60 text-gray-200 font-bold text-xs px-4 py-2 rounded-lg"
+            className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs px-4 py-2 rounded-lg shadow-sm"
           >
             Đăng ký ngay
           </button>
@@ -169,16 +169,16 @@ export default function Websites() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {websites.map((web: any) => (
-            <div key={web._id} className="glass p-6 rounded-xl flex flex-col justify-between hover:border-gray-800/80 transition-all duration-200">
+            <div key={web._id} className="card flex flex-col justify-between transition-all duration-200">
               <div>
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="font-bold text-white text-base leading-tight">{web.name}</h3>
+                    <h3 className="font-bold text-gray-900 text-base leading-tight">{web.name}</h3>
                     <a
                       href={`https://${web.domain}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-red-500 hover:underline flex items-center gap-1 mt-1 font-medium"
+                      className="text-xs text-red-500 hover:underline flex items-center gap-1 mt-1 font-semibold"
                     >
                       <Globe className="w-3.5 h-3.5" />
                       {web.domain}
@@ -190,8 +190,8 @@ export default function Websites() {
                     onClick={() => handleToggleStatus(web._id, web.status)}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-150 ${
                       web.status === "active"
-                        ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/25"
-                        : "bg-gray-800 border border-gray-700 text-gray-400 hover:bg-gray-700"
+                        ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 hover:bg-emerald-500/25"
+                        : "bg-gray-100 border border-gray-200 text-gray-500 hover:bg-gray-200"
                     }`}
                     title="Click để thay đổi trạng thái"
                   >
@@ -200,19 +200,19 @@ export default function Websites() {
                   </button>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs text-gray-500 border-t border-gray-800/50 pt-4 mt-4">
+                <div className="flex items-center gap-4 text-xs text-gray-500 border-t border-gray-100 pt-4 mt-4">
                   <span className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5 text-gray-600" />
+                    <Calendar className="w-3.5 h-3.5 text-gray-400" />
                     Đăng ký: {new Date(web.createdAt).toLocaleDateString("vi-VN")}
                   </span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 border-t border-gray-800/50 pt-4 mt-6">
+              <div className="flex gap-2 border-t border-gray-100 pt-4 mt-6">
                 <button
                   onClick={() => setSelectedWeb(web)}
-                  className="flex-1 bg-gray-900 hover:bg-gray-800 border border-gray-800/80 hover:border-red-500/30 text-gray-300 hover:text-red-500 font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150"
+                  className="flex-1 bg-white hover:bg-gray-50 border border-gray-200 hover:border-red-500/30 text-gray-700 hover:text-red-600 font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150 shadow-sm"
                 >
                   <Code2 className="w-4 h-4" />
                   Mã tích hợp

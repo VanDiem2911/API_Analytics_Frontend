@@ -20,18 +20,18 @@ export default function Layout() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col md:flex-row text-gray-100 font-sans">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row text-gray-900 font-sans">
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-gray-900/50 border-r border-gray-800/60 p-5 flex flex-col justify-between backdrop-blur-md">
+      <aside className="w-full md:w-64 bg-white/80 border-r border-gray-200/80 p-5 flex flex-col justify-between backdrop-blur-md">
         <div>
           {/* Logo Brand Header */}
           <div className="flex items-center gap-3 px-2 py-4 mb-6">
             <Logo className="w-10 h-10 shadow-lg shadow-red-600/10" />
             <div>
-              <h1 className="font-bold text-base leading-tight text-white">
+              <h1 className="font-bold text-base leading-tight text-gray-950">
                 DUDI Software
               </h1>
-              <span className="text-[9px] text-red-500 font-bold tracking-wider uppercase">
+              <span className="text-[9px] text-red-600 font-bold tracking-wider uppercase">
                 Tracker Dashboard
               </span>
             </div>
@@ -46,10 +46,10 @@ export default function Layout() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? "bg-red-500/10 text-red-500 border border-red-500/20 shadow-[0_0_15px_-3px_rgba(239,68,68,0.15)]"
-                      : "text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 border border-transparent"
+                      ? "bg-red-500/10 text-red-600 border border-red-500/20 shadow-[0_4px_15px_-3px_rgba(239,68,68,0.08)]"
+                      : "text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent"
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -61,18 +61,18 @@ export default function Layout() {
         </div>
 
         {/* User Info & Logout Button */}
-        <div className="pt-4 border-t border-gray-800/60 mt-6 md:mt-0">
+        <div className="pt-4 border-t border-gray-200/80 mt-6 md:mt-0">
           <div className="flex items-center justify-between px-2 mb-3">
             <div className="overflow-hidden">
-              <p className="text-sm font-semibold text-gray-200 truncate">{fullName}</p>
-              <span className="text-[10px] text-red-500 font-bold tracking-wide uppercase">
+              <p className="text-sm font-semibold text-gray-800 truncate">{fullName}</p>
+              <span className="text-[10px] text-red-600 font-bold tracking-wide uppercase">
                 {localStorage.getItem("analytics_user_role") || "USER"}
               </span>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all duration-200"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold text-red-500 hover:bg-red-500/5 transition-all duration-200"
           >
             <LogOut className="w-5 h-5" />
             Đăng xuất

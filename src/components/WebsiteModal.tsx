@@ -47,13 +47,13 @@ Tracker.init({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Dark Overlay background */}
-      <div className="absolute inset-0 bg-gray-950/80 backdrop-blur-sm" onClick={onClose}></div>
+      <div className="absolute inset-0 bg-gray-950/40 backdrop-blur-sm" onClick={onClose}></div>
 
       {/* Modal Dialog container */}
-      <div className="glass w-full max-w-xl rounded-xl p-6 relative z-10 animate-in fade-in-50 zoom-in-95 duration-200">
+      <div className="card w-full max-w-xl relative z-10 animate-in fade-in-50 zoom-in-95 duration-200 shadow-xl">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 p-1.5 rounded-lg transition-all duration-150"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-950 hover:bg-gray-100 p-1.5 rounded-lg transition-all duration-150"
         >
           <X className="w-5 h-5" />
         </button>
@@ -68,11 +68,11 @@ Tracker.init({
           <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500">
             API Key của dự án
           </label>
-          <div className="flex gap-2 bg-gray-900 border border-gray-800 p-2.5 rounded-lg items-center justify-between">
+          <div className="flex gap-2 bg-gray-50 border border-gray-200 p-2.5 rounded-lg items-center justify-between">
             <code className="text-xs text-red-500 font-mono select-all truncate">{website.apiKey}</code>
             <button
               onClick={copyKey}
-              className="flex-shrink-0 p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
+              className="flex-shrink-0 p-1 text-gray-400 hover:text-red-500 hover:bg-gray-100 rounded transition-all duration-150"
               title="Sao chép API Key"
             >
               {copiedKey ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -82,17 +82,17 @@ Tracker.init({
 
         {/* Integration Instructions */}
         <div className="space-y-4">
-          <h4 className="text-xs font-semibold text-gray-300">Hướng dẫn tích hợp vào ReactJS</h4>
+          <h4 className="text-xs font-bold text-gray-700">Hướng dẫn tích hợp vào ReactJS</h4>
           
           <div className="space-y-2">
             <span className="text-[10px] text-gray-500 font-medium">Bước 1: Cài đặt SDK package</span>
-            <div className="flex bg-gray-900 border border-gray-800 px-3 py-2 rounded-lg items-center justify-between">
-              <code className="text-xs text-emerald-400 font-mono">npm install kpi-tracker-vandiem</code>
+            <div className="flex bg-gray-50 border border-gray-200 px-3 py-2 rounded-lg items-center justify-between">
+              <code className="text-xs text-emerald-600 font-mono">npm install kpi-tracker-vandiem</code>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText("npm install kpi-tracker-vandiem");
                 }}
-                className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
+                className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-100 rounded transition-all duration-150"
               >
                 <Copy className="w-4 h-4" />
               </button>
@@ -119,7 +119,7 @@ Tracker.init({
                 )}
               </button>
             </div>
-            <pre className="bg-gray-900 border border-gray-800 p-3 rounded-lg overflow-x-auto text-[10px] font-mono text-gray-300 leading-relaxed">
+            <pre className="bg-gray-50 border border-gray-200 p-3 rounded-lg overflow-x-auto text-[10px] font-mono text-gray-700 leading-relaxed">
               <code>{integrationCode}</code>
             </pre>
           </div>

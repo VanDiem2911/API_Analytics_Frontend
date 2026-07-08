@@ -10,6 +10,7 @@ interface ListBreakdownProps {
   columnName: string;
   data: BreakdownItem[];
   onFilterClick?: (name: string) => void;
+  heightClass?: string;
 }
 
 export default function ListBreakdown({
@@ -17,6 +18,7 @@ export default function ListBreakdown({
   columnName,
   data,
   onFilterClick,
+  heightClass = "h-[400px]",
 }: ListBreakdownProps) {
   // Find maximum value to calculate relative percentages for background bars
   const max = data.length > 0 ? Math.max(...data.map((item) => item.count)) : 1;
@@ -26,14 +28,14 @@ export default function ListBreakdown({
   };
 
   return (
-    <div className="glass p-6 rounded-xl flex flex-col h-[400px]">
+    <div className={`card flex flex-col ${heightClass}`}>
       {/* Header */}
       <div className="mb-4">
-        <h4 className="text-lg font-bold text-white">{title}</h4>
+        <h4 className="text-lg font-bold text-gray-900">{title}</h4>
       </div>
 
       {/* Columns Header */}
-      <div className="flex justify-between items-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 py-1 mb-2 border-b border-gray-800/40">
+      <div className="flex justify-between items-center text-xs font-bold text-gray-500 uppercase tracking-wider px-2 py-1 mb-2 border-b border-gray-100">
         <span>{columnName}</span>
         <span>Lượt xem / Khách</span>
       </div>
@@ -51,7 +53,7 @@ export default function ListBreakdown({
             return (
               <div
                 key={`${item.name}-${index}`}
-                className="group relative flex items-center justify-between text-xs py-2 px-3 rounded-lg overflow-hidden border border-transparent hover:border-gray-800/60 transition-all duration-200"
+                className="group relative flex items-center justify-between text-xs py-2 px-3 rounded-lg overflow-hidden border border-transparent hover:border-gray-200 transition-all duration-200"
               >
                 {/* Horizontal Relative Background Bar */}
                 <div
@@ -61,13 +63,13 @@ export default function ListBreakdown({
 
                 {/* Left Side: Name and Actions */}
                 <div className="relative flex items-center gap-2 max-w-[70%] z-10">
-                  <span className="text-gray-300 font-medium truncate">{item.name}</span>
+                  <span className="text-gray-700 font-semibold truncate">{item.name}</span>
                   
                   {/* Hover utility buttons */}
                   <div className="hidden group-hover:flex items-center gap-1.5 ml-2">
                     <button
                       onClick={() => copyToClipboard(item.name)}
-                      className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
+                      className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-100 rounded transition-all duration-150"
                       title="Sao chép"
                     >
                       <Copy className="w-3 h-3" />
@@ -75,7 +77,7 @@ export default function ListBreakdown({
                     {onFilterClick && (
                       <button
                         onClick={() => onFilterClick(item.name)}
-                        className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-800 rounded transition-all duration-150"
+                        className="p-1 text-gray-400 hover:text-red-500 hover:bg-gray-100 rounded transition-all duration-150"
                         title="Lọc theo mục này"
                       >
                         <Filter className="w-3 h-3" />
@@ -85,7 +87,7 @@ export default function ListBreakdown({
                 </div>
 
                 {/* Right Side: Count */}
-                <div className="relative z-10 text-right font-bold text-gray-200">
+                <div className="relative z-10 text-right font-bold text-gray-800">
                   {item.count.toLocaleString()}
                 </div>
               </div>

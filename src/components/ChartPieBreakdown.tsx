@@ -23,11 +23,11 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
     if (active && payload && payload.length) {
       const percentage = total > 0 ? ((payload[0].value / total) * 100).toFixed(1) : 0;
       return (
-        <div className="bg-gray-900 border border-gray-800 p-2.5 rounded-lg shadow-lg">
-          <p className="text-xs font-bold text-gray-200">{payload[0].name}</p>
+        <div className="bg-white border border-gray-200 p-2.5 rounded-lg shadow-lg">
+          <p className="text-xs font-bold text-gray-800">{payload[0].name}</p>
           <div className="flex gap-4 items-center justify-between text-xs mt-1">
             <span className="text-gray-400">Số lượng:</span>
-            <span className="font-semibold text-gray-100">{payload[0].value.toLocaleString()}</span>
+            <span className="font-semibold text-gray-800">{payload[0].value.toLocaleString()}</span>
           </div>
           <div className="flex gap-4 items-center justify-between text-xs py-0.5">
             <span className="text-gray-400">Tỷ lệ:</span>
@@ -40,11 +40,11 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
   };
 
   return (
-    <div className="glass p-6 rounded-xl flex flex-col justify-between h-full">
+    <div className="card flex flex-col justify-between h-full">
       {/* Title */}
       <div className="mb-4">
-        <h4 className="text-lg font-bold text-white">{title}</h4>
-        <p className="text-xs text-gray-400">{subtitle}</p>
+        <h4 className="text-lg font-bold text-gray-900">{title}</h4>
+        <p className="text-xs text-gray-500 font-medium">{subtitle}</p>
       </div>
 
       {chartData.length === 0 ? (
@@ -76,8 +76,8 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
             
             {/* Center Summary Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-2xl font-extrabold text-white">{total.toLocaleString()}</span>
-              <span className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">
+              <span className="text-2xl font-extrabold text-gray-950">{total.toLocaleString()}</span>
+              <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">
                 Tổng cộng
               </span>
             </div>
@@ -93,10 +93,10 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
                 <div key={item.name} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2 max-w-[140px] truncate">
                     <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: color }}></span>
-                    <span className="text-gray-300 font-medium truncate">{item.name}</span>
+                    <span className="text-gray-700 font-medium truncate">{item.name}</span>
                   </div>
                   <div className="flex items-center gap-3 text-right">
-                    <span className="text-gray-400 font-bold">{item.count.toLocaleString()}</span>
+                    <span className="text-gray-500 font-bold">{item.count.toLocaleString()}</span>
                     <span className="text-red-500 font-bold w-10">{pct}%</span>
                   </div>
                 </div>

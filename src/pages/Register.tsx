@@ -49,23 +49,23 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 p-4 relative overflow-hidden font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 relative overflow-hidden font-sans">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Register Card */}
-      <div className="glass w-full max-w-md p-8 rounded-2xl relative z-10 shadow-2xl">
+      <div className="glass w-full max-w-md p-8 rounded-2xl relative z-10 shadow-xl">
         {/* Brand Header */}
         <div className="flex flex-col items-center mb-8">
-          <Logo className="w-16 h-16 shadow-xl shadow-red-600/20 mb-3" />
-          <h2 className="text-2xl font-bold text-white tracking-tight">Tạo tài khoản mới</h2>
-          <p className="text-xs text-gray-400 mt-1">Đăng ký tham gia quản trị Website Analytics</p>
+          <Logo className="w-16 h-16 shadow-lg shadow-red-600/10 mb-3" />
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Tạo tài khoản mới</h2>
+          <p className="text-xs text-gray-500 mt-1">Đăng ký tham gia quản trị Website Analytics</p>
         </div>
 
         {/* Error Notification */}
         {errorMsg && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs px-4 py-3 rounded-lg mb-6 leading-relaxed">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-600 text-xs px-4 py-3 rounded-lg mb-6 leading-relaxed">
             {errorMsg}
           </div>
         )}
@@ -85,13 +85,13 @@ export default function Register() {
               Họ và tên
             </label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Nguyễn Văn A"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
+                className="w-full bg-white/80 border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -103,13 +103,13 @@ export default function Register() {
               Địa chỉ Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="email"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
+                className="w-full bg-white/80 border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -121,13 +121,13 @@ export default function Register() {
               Mật khẩu truy cập
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="password"
                 placeholder="Tối thiểu 6 ký tự"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
+                className="w-full bg-white/80 border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -145,9 +145,9 @@ export default function Register() {
         </form>
 
         {/* Login Redirect link */}
-        <div className="mt-8 text-center text-xs text-gray-400">
+        <div className="mt-8 text-center text-xs text-gray-500">
           Đã có tài khoản?{" "}
-          <Link to="/login" className="text-red-500 hover:underline font-semibold ml-1">
+          <Link to="/login" className="text-red-600 hover:underline font-semibold ml-1">
             Đăng nhập ngay
           </Link>
         </div>

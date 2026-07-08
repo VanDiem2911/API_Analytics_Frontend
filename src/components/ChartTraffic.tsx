@@ -23,19 +23,19 @@ interface ChartTrafficProps {
 export default function ChartTraffic({ data }: ChartTrafficProps) {
   const [activeMetric, setActiveMetric] = useState<"all" | "pv" | "uv" | "sess">("all");
 
-  // Custom tooltips to fit our dark theme perfectly
+  // Custom tooltips to fit our light theme perfectly
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-gray-900/90 border border-gray-800 p-4 rounded-lg shadow-xl backdrop-blur-md">
-          <p className="text-xs font-semibold text-gray-400 mb-2">{label}</p>
+        <div className="bg-white/95 border border-gray-200 p-4 rounded-lg shadow-xl backdrop-blur-md">
+          <p className="text-xs font-semibold text-gray-500 mb-2">{label}</p>
           {payload.map((pld: any) => (
-            <div key={pld.name} className="flex items-center gap-4 justify-between text-sm py-0.5">
+            <div key={pld.name} className="flex items-center gap-4 justify-between text-xs py-0.5">
               <span className="flex items-center gap-1.5 font-medium" style={{ color: pld.color }}>
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: pld.color }}></span>
                 {pld.name === "pageViews" ? "Xem trang" : pld.name === "visitors" ? "Khách truy cập" : "Số phiên"}
               </span>
-              <span className="font-bold text-gray-100">{pld.value.toLocaleString()}</span>
+              <span className="font-bold text-gray-800">{pld.value.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -45,20 +45,20 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
   };
 
   return (
-    <div className="glass p-6 rounded-xl flex flex-col justify-between">
+    <div className="card flex flex-col justify-between">
       {/* Chart Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h4 className="text-lg font-bold text-white">Xu hướng lưu lượng</h4>
-          <p className="text-xs text-gray-400">Xem thống kê lượt xem trang và số khách truy cập theo thời gian</p>
+          <h4 className="text-lg font-bold text-gray-900">Xu hướng lưu lượng</h4>
+          <p className="text-xs text-gray-500 font-medium">Xem thống kê lượt xem trang và số khách truy cập theo thời gian</p>
         </div>
 
         {/* Metric Selector Controls */}
-        <div className="flex bg-gray-800/40 border border-gray-700/30 p-1 rounded-lg text-xs font-medium self-start">
+        <div className="flex bg-gray-100 border border-gray-200/60 p-1 rounded-lg text-xs font-semibold self-start shadow-inner">
           <button
             onClick={() => setActiveMetric("all")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "all" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "all" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-500 hover:text-gray-800"
             }`}
           >
             Tất cả
@@ -66,7 +66,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("pv")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "pv" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "pv" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-500 hover:text-gray-800"
             }`}
           >
             Lượt xem
@@ -74,7 +74,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("uv")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "uv" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "uv" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-500 hover:text-gray-800"
             }`}
           >
             Khách
@@ -82,7 +82,7 @@ export default function ChartTraffic({ data }: ChartTrafficProps) {
           <button
             onClick={() => setActiveMetric("sess")}
             className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
-              activeMetric === "sess" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-400 hover:text-gray-200"
+              activeMetric === "sess" ? "bg-red-600 text-white font-semibold shadow-sm" : "text-gray-500 hover:text-gray-800"
             }`}
           >
             Phiên

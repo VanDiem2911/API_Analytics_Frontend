@@ -22,57 +22,62 @@ export default function CardMetric({
   const isPositiveGrowth = isBounceRate ? change < 0 : change > 0;
   const hasChange = change !== 0;
 
-  // Formatting helper for comparison text
-  const formatChange = () => {
-    if (change === 0) return "Không đổi";
-    const sign = change > 0 ? "+" : "";
-    return `${sign}${change}%`;
+  // Determine icon background and text colors based on title
+  const getColorClasses = () => {
+    switch (title) {
+      case "Lượt xem trang":
+        return "bg-blue-50 text-blue-600";
+      case "Khách truy cập":
+        return "bg-purple-50 text-purple-600";
+      case "Số phiên truy cập":
+        return "bg-emerald-50 text-emerald-600";
+      case "Thời gian trung bình":
+        return "bg-orange-50 text-orange-600";
+      case "Tỷ lệ thoát":
+        return "bg-red-50 text-red-600";
+      default:
+        return "bg-primary-50 text-primary-600";
+    }
   };
 
   return (
-    <div className="glass glass-hover p-6 rounded-xl relative overflow-hidden flex flex-col justify-between">
+    <div className="card p-5 group hover:scale-[1.01] transition-all duration-200 flex flex-col justify-between h-full">
       {/* Top Section: Title & Icon */}
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm text-gray-400 font-medium">{title}</span>
-        <div className="bg-gray-800/60 p-2 rounded-lg text-red-500 border border-gray-700/30">
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <span className="text-xs font-medium text-gray-500">{title}</span>
+          <h3 className="text-2xl font-bold tracking-tight text-gray-900 mt-1">{value}</h3>
+        </div>
+        <div className={`p-2 rounded-xl transition-colors duration-200 ${getColorClasses()}`}>
           {Icon ? <Icon className="w-5 h-5" /> : <Users2 className="w-5 h-5" />}
         </div>
       </div>
 
-      {/* Middle Section: Value */}
-      <div className="flex items-end justify-between">
-        <div>
-          <h3 className="text-3xl font-bold tracking-tight text-white">{value}</h3>
-        </div>
-
-        {/* Bottom Section: Real-time Indicator or Trend Percentage */}
-        <div>
-          {isOnline ? (
-            <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-semibold text-emerald-400 animate-pulse-slow">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-              Đang hoạt động
-            </div>
-          ) : hasChange ? (
-            <div
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold ${
-                isPositiveGrowth
-                  ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
-                  : "bg-red-500/10 border border-red-500/20 text-red-400"
-              }`}
-            >
-              {change > 0 ? (
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              ) : (
-                <ArrowDownRight className="w-3.5 h-3.5" />
-              )}
-              {formatChange()}
-            </div>
-          ) : (
-            <div className="bg-gray-800/40 border border-gray-700/20 px-2 py-0.5 rounded-md text-xs text-gray-400">
-              0.0%
-            </div>
-          )}
-        </div>
+      {/* Bottom Section: Real-time Indicator or Trend Percentage */}
+      <div className="mt-2">
+        {isOnline ? (
+          <div className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-emerald-600 animate-pulse-slow uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Đang hoạt động
+          </div>
+        ) : hasChange ? (
+          <div
+            className={`inline-flex items-center gap-0.5 text-xs font-medium ${
+              isPositiveGrowth ? "text-emerald-600" : "text-red-600"
+            }`}
+          >
+            {isPositiveGrowth ? (
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            ) : (
+              <ArrowDownRight className="w-3.5 h-3.5" />
+            )}
+            <span>
+              {isPositiveGrowth ? "▲" : "▼"} {Math.abs(change)}%
+            </span>
+          </div>
+        ) : (
+          <span className="text-xs text-gray-400">Không đổi</span>
+        )}
       </div>
     </div>
   );
