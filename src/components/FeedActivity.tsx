@@ -1,6 +1,5 @@
 import {
   Activity,
-  Chrome,
   AlertOctagon,
   Eye,
   Laptop,
@@ -120,16 +119,10 @@ export default function FeedActivity({ feed }: FeedActivityProps) {
                     {item.city}, {item.country}
                   </span>
 
-                  {/* Device and OS */}
+                  {/* Device */}
                   <span className="flex items-center gap-1 border-l border-gray-800 pl-3">
                     <DeviceIcon type={item.device} className="w-3.5 h-3.5 text-gray-600" />
-                    {item.os}
-                  </span>
-
-                  {/* Browser */}
-                  <span className="flex items-center gap-1 border-l border-gray-800 pl-3">
-                    <Chrome className="w-3.5 h-3.5 text-gray-600" />
-                    {item.browser}
+                    <span className="capitalize">{item.device}</span>
                   </span>
                 </div>
               </div>

@@ -27,11 +27,9 @@ export default function Dashboard() {
   const [customEnd, setCustomEnd] = useState("");
 
   // Filters state
-  const [browserFilter, setBrowserFilter] = useState("");
   const [deviceFilter, setDeviceFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [pageFilter, setPageFilter] = useState("");
-  const [campaignFilter, setCampaignFilter] = useState("");
 
   // 1. Fetch websites list
   const { data: websites = [], isLoading: isWebsitesLoading } = useQuery({
@@ -64,11 +62,9 @@ export default function Dashboard() {
   };
 
   const clearAllFilters = () => {
-    setBrowserFilter("");
     setDeviceFilter("");
     setCountryFilter("");
     setPageFilter("");
-    setCampaignFilter("");
   };
 
   // Helper to compile API queries
@@ -81,18 +77,16 @@ export default function Dashboard() {
       params.startDate = customStart;
       params.endDate = customEnd;
     }
-    if (browserFilter) params.browser = browserFilter;
     if (deviceFilter) params.device = deviceFilter;
     if (countryFilter) params.country = countryFilter;
     if (pageFilter) params.page = pageFilter;
-    if (campaignFilter) params.campaign = campaignFilter;
 
     return params;
   };
 
   const queryParams = getQueryParams();
   const hasActiveFilters =
-    !!browserFilter || !!deviceFilter || !!countryFilter || !!pageFilter || !!campaignFilter;
+    !!deviceFilter || !!countryFilter || !!pageFilter;
 
   // 2. Fetch Metrics Query
   const {
@@ -257,15 +251,6 @@ export default function Dashboard() {
             Đang lọc:
           </span>
 
-          {browserFilter && (
-            <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
-              Trình duyệt: {browserFilter}
-              <button onClick={() => setBrowserFilter("")} className="hover:text-red-400">
-                <X className="w-3 h-3" />
-              </button>
-            </span>
-          )}
-
           {deviceFilter && (
             <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
               Thiết bị: {deviceFilter}
@@ -288,15 +273,6 @@ export default function Dashboard() {
             <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
               Trang: {pageFilter}
               <button onClick={() => setPageFilter("")} className="hover:text-red-400">
-                <X className="w-3 h-3" />
-              </button>
-            </span>
-          )}
-
-          {campaignFilter && (
-            <span className="flex items-center gap-1 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-md">
-              Chiến dịch: {campaignFilter}
-              <button onClick={() => setCampaignFilter("")} className="hover:text-red-400">
                 <X className="w-3 h-3" />
               </button>
             </span>
@@ -410,12 +386,6 @@ export default function Dashboard() {
           subtitle="Tỷ lệ phân bổ theo loại thiết bị của khách"
           data={breakdowns.devices}
         />
-        
-        <ChartPieBreakdown
-          title="Trình duyệt"
-          subtitle="Các loại trình duyệt của khách truy cập"
-          data={breakdowns.browsers}
-        />
 
         <ListBreakdown
           title="Trang xem nhiều nhất"
@@ -428,20 +398,6 @@ export default function Dashboard() {
           title="Nguồn giới thiệu"
           columnName="Nguồn / Tên miền"
           data={breakdowns.referrers}
-          onFilterClick={setBrowserFilter} // Use as domain/referrer filter or general source
-        />
-
-        <ListBreakdown
-          title="Chiến dịch UTM"
-          columnName="Tên chiến dịch"
-          data={breakdowns.campaigns}
-          onFilterClick={setCampaignFilter}
-        />
-
-        <ListBreakdown
-          title="Hệ điều hành"
-          columnName="Hệ điều hành"
-          data={breakdowns.os}
         />
       </div>
 
