@@ -24,7 +24,7 @@ export default function WebsiteModal({ isOpen, onClose, website }: WebsiteModalP
     : window.location.origin + (backendUrl === "/" ? "" : backendUrl);
 
   // React SDK Integration snippet code
-  const integrationCode = `import Tracker from "kpi-tracker";
+  const integrationCode = `import Tracker from "kpi-tracker-vandiem";
 
 // Khởi tạo tracker một lần duy nhất tại root (ví dụ: main.tsx hoặc App.tsx)
 Tracker.init({
@@ -87,10 +87,10 @@ Tracker.init({
           <div className="space-y-2">
             <span className="text-[10px] text-gray-500 font-medium">Bước 1: Cài đặt SDK package</span>
             <div className="flex bg-gray-900 border border-gray-800 px-3 py-2 rounded-lg items-center justify-between">
-              <code className="text-xs text-emerald-400 font-mono">npm install kpi-tracker</code>
+              <code className="text-xs text-emerald-400 font-mono">npm install kpi-tracker-vandiem</code>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText("npm install kpi-tracker");
+                  navigator.clipboard.writeText("npm install kpi-tracker-vandiem");
                 }}
                 className="p-1 text-gray-400 hover:text-sky-400 hover:bg-gray-800 rounded transition-all duration-150"
               >
