@@ -70,11 +70,11 @@ export default function ListBreakdown({
     <div className={`glass p-6 flex flex-col ${heightClass}`}>
       {/* Header */}
       <div className="mb-4">
-        <h4 className="text-base font-extrabold text-slate-900 dark:text-white">{title}</h4>
+        <h4 className="text-base font-extrabold text-white">{title}</h4>
       </div>
 
       {/* Columns Header */}
-      <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 pb-2 mb-3 border-b border-slate-100 dark:border-slate-800">
+      <div className="flex justify-between items-center text-[10px] font-bold text-slate-300 uppercase tracking-widest px-2 pb-2 mb-3 border-b border-white/10">
         <span>{columnName}</span>
         <span>Lượt xem / Khách</span>
       </div>
@@ -82,7 +82,7 @@ export default function ListBreakdown({
       {/* Items Scrollable List */}
       <div className="flex-1 overflow-y-auto space-y-2 pr-1">
         {data.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-xs text-slate-400 dark:text-slate-500 italic">
+          <div className="h-full flex items-center justify-center text-xs text-slate-400 italic">
             Không có dữ liệu
           </div>
         ) : (
@@ -94,7 +94,7 @@ export default function ListBreakdown({
             return (
               <div
                 key={`${item.name}-${index}`}
-                className="group relative flex items-center justify-between text-xs py-2.5 px-3 rounded-xl overflow-hidden border border-transparent hover:border-slate-200/60 dark:hover:border-slate-800/80 hover:bg-white/40 dark:hover:bg-slate-900/40 transition-all duration-200"
+                className="group relative flex items-center justify-between text-xs py-2.5 px-3 rounded-xl overflow-hidden border border-transparent hover:border-white/10 hover:bg-white/5 transition-all duration-200"
               >
                 {/* Horizontal Relative Background Bar with animated slide-in */}
                 <div
@@ -114,13 +114,13 @@ export default function ListBreakdown({
                       {getReferrerIcon(item.name)}
                     </span>
                   )}
-                  <span className="text-slate-700 dark:text-slate-300 font-bold truncate">{item.name || "Trực tiếp / Direct"}</span>
+                  <span className="text-slate-200 font-bold truncate">{item.name || "Trực tiếp / Direct"}</span>
                   
                   {/* Hover utility buttons */}
                   <div className="hidden group-hover:flex items-center gap-1.5 ml-2">
                     <button
                       onClick={() => copyToClipboard(item.name)}
-                      className="p-1 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all duration-150"
+                      className="p-1 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-150"
                       title="Sao chép"
                     >
                       <Copy className="w-3 h-3" />
@@ -128,7 +128,7 @@ export default function ListBreakdown({
                     {onFilterClick && (
                       <button
                         onClick={() => onFilterClick(item.name)}
-                        className="p-1 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all duration-150"
+                        className="p-1 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-150"
                         title="Lọc theo mục này"
                       >
                         <Filter className="w-3 h-3" />
@@ -138,7 +138,7 @@ export default function ListBreakdown({
                 </div>
 
                 {/* Right Side: Count */}
-                <div className="relative z-10 text-right font-extrabold text-slate-900 dark:text-slate-100">
+                <div className="relative z-10 text-right font-extrabold text-white">
                   {item.count.toLocaleString()}
                 </div>
               </div>

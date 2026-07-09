@@ -43,12 +43,12 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
     <div className="glass p-6 rounded-2xl flex flex-col justify-between h-full">
       {/* Title */}
       <div className="mb-4">
-        <h4 className="text-base font-extrabold text-slate-900 dark:text-white">{title}</h4>
-        <p className="text-xs text-slate-400 dark:text-slate-550 font-semibold mt-0.5">{subtitle}</p>
+        <h4 className="text-base font-extrabold text-white">{title}</h4>
+        <p className="text-xs text-slate-300 font-semibold mt-0.5">{subtitle}</p>
       </div>
  
       {chartData.length === 0 ? (
-        <div className="flex-1 flex items-center justify-center py-12 text-xs text-slate-450 dark:text-slate-500 italic">
+        <div className="flex-1 flex items-center justify-center py-12 text-xs text-slate-400 italic">
           Không có dữ liệu thống kê
         </div>
       ) : (
@@ -76,8 +76,8 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
             
             {/* Center Summary Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-2xl font-black text-slate-900 dark:text-white leading-none">{total.toLocaleString()}</span>
-              <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-extrabold mt-1">
+              <span className="text-2xl font-black text-white leading-none">{total.toLocaleString()}</span>
+              <span className="text-[9px] text-slate-300 uppercase tracking-widest font-extrabold mt-1">
                 Tổng số
               </span>
             </div>
@@ -93,18 +93,18 @@ export default function ChartPieBreakdown({ title, subtitle, data }: ChartPieBre
                 <div key={item.name} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2 max-w-[140px] truncate">
                     <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: color }}></span>
-                    <span className="text-slate-700 dark:text-slate-350 font-semibold truncate">{item.name}</span>
+                    <span className="text-slate-200 font-semibold truncate">{item.name}</span>
                   </div>
                   <div className="flex items-center gap-3 text-right">
-                    <span className="text-slate-900 dark:text-slate-100 font-bold">{item.count.toLocaleString()}</span>
-                    <span className="text-slate-400 dark:text-slate-500 font-bold w-10">{pct}%</span>
+                    <span className="text-white font-bold">{item.count.toLocaleString()}</span>
+                    <span className="text-slate-300 font-bold w-10">{pct}%</span>
                   </div>
                 </div>
               );
             })}
             
             {chartData.length > 5 && (
-              <div className="text-[10px] text-slate-400 dark:text-slate-500 text-center pt-1.5 italic font-medium">
+              <div className="text-[10px] text-slate-300 text-center pt-1.5 italic font-medium">
                 và {chartData.length - 5} mục khác...
               </div>
             )}

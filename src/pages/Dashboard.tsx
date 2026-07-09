@@ -395,8 +395,8 @@ export default function Dashboard() {
         <div>
           <div className="glass p-6 flex flex-col justify-between h-full min-h-[400px]">
             <div>
-              <h4 className="text-base font-extrabold text-slate-900">Đang truy cập</h4>
-              <p className="text-xs text-slate-400 font-semibold mt-0.5">Thống kê số lượng phiên truy cập trực tiếp ngay bây giờ</p>
+              <h4 className="text-base font-extrabold text-white">Đang truy cập</h4>
+              <p className="text-xs text-slate-300 font-semibold mt-0.5">Thống kê số lượng phiên truy cập trực tiếp ngay bây giờ</p>
             </div>
 
             <div className="flex flex-col items-center justify-center my-6">
@@ -404,12 +404,12 @@ export default function Dashboard() {
                 {/* Pulsing glow circles behind number */}
                 <span className="absolute w-28 h-28 rounded-full bg-emerald-500/10 animate-ping"></span>
                 <span className="absolute w-20 h-20 rounded-full bg-emerald-500/20 animate-pulse-slow"></span>
-                <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100 shadow-inner">
-                  <Users className="w-6 h-6 text-emerald-600 animate-pulse" />
+                <div className="w-14 h-14 rounded-full bg-emerald-950/40 flex items-center justify-center border border-emerald-900/50 shadow-inner">
+                  <Users className="w-6 h-6 text-emerald-400 animate-pulse" />
                 </div>
               </div>
-              <span className="text-6xl font-black tracking-tighter text-slate-900 leading-none">{onlineCount}</span>
-              <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest mt-3.5 flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full shadow-sm">
+              <span className="text-6xl font-black tracking-tighter text-white leading-none">{onlineCount}</span>
+              <span className="text-[10px] text-emerald-400 font-extrabold uppercase tracking-widest mt-3.5 flex items-center gap-1.5 bg-emerald-950/40 border border-emerald-900/50 px-3 py-1 rounded-full shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Người dùng Online
               </span>
@@ -417,14 +417,14 @@ export default function Dashboard() {
 
             {/* Active pages list of online users */}
             <div className="space-y-2.5 max-h-36 overflow-y-auto pr-1">
-              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Các trang đang xem:</span>
+              <span className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Các trang đang xem:</span>
               {activePagesRealtime.length === 0 ? (
-                <div className="text-[10px] text-slate-400 italic font-semibold">Không có phiên tích cực</div>
+                <div className="text-[10px] text-slate-300 italic font-semibold">Không có phiên tích cực</div>
               ) : (
                 activePagesRealtime.map((ap: any, index: number) => (
-                  <div key={index} className="flex justify-between items-center text-xs py-2 px-3 bg-slate-50 border border-slate-100/50 rounded-xl">
-                    <span className="text-slate-700 font-semibold truncate max-w-[80%]">{ap.url}</span>
-                    <span className="font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-lg text-[10px]">
+                  <div key={index} className="flex justify-between items-center text-xs py-2 px-3 bg-white/5 border border-white/10 rounded-xl">
+                    <span className="text-slate-200 font-semibold truncate max-w-[80%]">{ap.url}</span>
+                    <span className="font-extrabold text-emerald-400 bg-emerald-950/40 border border-emerald-900/50 px-2 py-0.5 rounded-lg text-[10px]">
                       {ap.count}
                     </span>
                   </div>
