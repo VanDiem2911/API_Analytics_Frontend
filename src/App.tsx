@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Websites from "./pages/Websites";
 import Layout from "./components/Layout";
 
 // Initialize Query Client for React Query caching
@@ -67,7 +66,6 @@ function App() {
             }
           >
             <Route index element={<Dashboard />} />
-            <Route path="websites" element={<Websites />} />
           </Route>
 
           {/* Catch-all fallback */}

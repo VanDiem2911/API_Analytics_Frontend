@@ -41,23 +41,38 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 relative overflow-hidden font-sans">
-      {/* Background glowing decorations */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <div className="relative min-h-screen bg-black flex items-center justify-center p-4 overflow-hidden font-sans">
+      {/* Background Video */}
+      <video
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_094145_4a271a6c-3869-4f1c-8aa7-aeb0cb227994.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
+      />
+
+      {/* Bottom Blur Overlay (No Gradient Darkening) */}
+      <div
+        className="fixed inset-0 w-full h-full backdrop-blur-xl z-0 pointer-events-none"
+        style={{
+          WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 45%)",
+          maskImage: "linear-gradient(to top, black 0%, transparent 45%)",
+        }}
+      />
 
       {/* Login Card */}
-      <div className="glass w-full max-w-md p-8 rounded-2xl relative z-10 shadow-xl">
+      <div className="bg-white/5 backdrop-blur-[6px] border border-white/10 w-full max-w-md p-8 rounded-2xl relative z-10 shadow-2xl">
         {/* Brand Header */}
         <div className="flex flex-col items-center mb-8">
           <Logo className="w-16 h-16 shadow-lg shadow-red-600/10 mb-3" />
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Chào mừng quay trở lại</h2>
-          <p className="text-xs text-gray-500 mt-1">Đăng nhập tài khoản DUDI Analytics của bạn</p>
+          <h2 className="text-2xl font-bold text-white tracking-tight">Chào mừng quay trở lại</h2>
+          <p className="text-xs text-gray-400 mt-1">Đăng nhập tài khoản DUDI Analytics của bạn</p>
         </div>
 
         {/* Error Notification */}
         {errorMsg && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-600 text-xs px-4 py-3 rounded-lg mb-6 leading-relaxed">
+          <div className="bg-red-500/15 border border-red-500/30 text-red-400 text-xs px-4 py-3 rounded-lg mb-6 leading-relaxed">
             {errorMsg}
           </div>
         )}
@@ -66,7 +81,7 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email input */}
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500">
+            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-400">
               Địa chỉ Email
             </label>
             <div className="relative">
@@ -76,7 +91,7 @@ export default function Login() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/80 border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
+                className="w-full bg-white/5 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -84,7 +99,7 @@ export default function Login() {
 
           {/* Password input */}
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500">
+            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-400">
               Mật khẩu đăng nhập
             </label>
             <div className="relative">
@@ -94,7 +109,7 @@ export default function Login() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/80 border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
+                className="w-full bg-white/5 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all duration-200"
                 required
               />
             </div>
@@ -131,16 +146,16 @@ export default function Login() {
               }
             }}
             disabled={isLoading}
-            className="w-full bg-white hover:bg-gray-50 text-red-600 border border-red-200 font-bold text-xs py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150 disabled:opacity-50 shadow-sm"
+            className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20 font-bold text-xs py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-150 disabled:opacity-50 shadow-sm"
           >
             Đăng nhập nhanh (Admin Demo)
           </button>
         </form>
 
         {/* Register Redirect link */}
-        <div className="mt-8 text-center text-xs text-gray-500">
+        <div className="mt-8 text-center text-xs text-gray-400">
           Chưa có tài khoản?{" "}
-          <Link to="/register" className="text-red-600 hover:underline font-semibold ml-1">
+          <Link to="/register" className="text-red-400 hover:text-red-300 hover:underline font-semibold ml-1">
             Đăng ký tài khoản mới
           </Link>
         </div>
