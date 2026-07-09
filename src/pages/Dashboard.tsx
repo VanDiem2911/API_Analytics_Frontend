@@ -83,6 +83,7 @@ export default function Dashboard() {
     const params: any = {
       websiteId: selectedWebId,
       period,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
     if (period === "custom") {
       params.startDate = customStart;
