@@ -57,17 +57,24 @@ export const websiteApi = {
     const res = await apiClient.get("/api/websites");
     return res.data;
   },
-  create: async (data: { name: string; domain: string }) => {
+  create: async (data: { name: string; domain: string; healthCheckUrl?: string }) => {
     const res = await apiClient.post("/api/websites", data);
     return res.data;
   },
-  update: async (id: string, data: { name?: string; domain?: string; status?: string }) => {
+  update: async (
+    id: string,
+    data: { name?: string; domain?: string; status?: string; healthCheckUrl?: string }
+  ) => {
     const res = await apiClient.put(`/api/websites/${id}`, data);
     return res.data;
   },
   delete: async (id: string) => {
     const res = await apiClient.delete(`/api/websites/${id}`);
     return res.data;
+  },
+  health: async (id: string) => {
+    const res = await apiClient.get(`/api/websites/${id}/health`);
+    return res.data.data;
   },
 };
 

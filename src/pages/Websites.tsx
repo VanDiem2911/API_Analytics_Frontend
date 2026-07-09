@@ -2,7 +2,40 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { websiteApi, analyticsApi } from "../lib/api";
 import WebsiteModal from "../components/WebsiteModal";
-import { Plus, Trash2, Code2, Globe, Power, Calendar, AlertCircle, AlertTriangle } from "lucide-react";
+import HealthCheckModal from "../components/HealthCheckModal";
+import {
+  Activity,
+  AlertCircle,
+  AlertTriangle,
+  Calendar,
+  Code2,
+  Globe,
+  Plus,
+  Power,
+  RefreshCw,
+  Settings2,
+  Trash2,
+} from "lucide-react";
+
+type HealthStatus = {
+  status: "online" | "offline";
+  statusCode: number | null;
+  latencyMs: number;
+  checkedAt: string;
+  url: string;
+  configured: boolean;
+  message: string;
+};
+
+function useWebsiteHealth(websiteId: string, healthCheckUrl?: string) {
+  return useQuery<HealthStatus>({
+    queryKey: ["website-health", websiteId, healthCheckUrl || "default"],
+    queryFn: () => websiteApi.health(websiteId),
+    refetchInterval: 60_000,
+    staleTime: 30_000,
+    retry: false,
+  });
+}
 
 // Hook: fetch recent error count for a single website
 function useWebsiteErrors(websiteId: string) {
@@ -14,7 +47,7 @@ function useWebsiteErrors(websiteId: string) {
     const fetchErrors = async () => {
       try {
         const res = await analyticsApi.getRealtime(websiteId);
-        const feed: any[] = res.feed || [];
+        const feed: any[] = res.data?.feed || [];
         const fiveMinAgo = Date.now() - 5 * 60 * 1000;
         const recentErrors = feed.filter(
           (item: any) =>
@@ -44,13 +77,30 @@ function WebsiteCard({
   onToggleStatus,
   onDelete,
   onOpenModal,
+  onConfigureHealth,
 }: {
   web: any;
   onToggleStatus: (id: string, status: string) => void;
   onDelete: (id: string, name: string) => void;
   onOpenModal: (web: any) => void;
+  onConfigureHealth: (web: any) => void;
 }) {
   const errorCount = useWebsiteErrors(web._id);
+  const health = useWebsiteHealth(web._id, web.healthCheckUrl);
+  const healthStatus = health.data?.status;
+  const healthLabel = health.isFetching
+    ? "Đang kiểm tra"
+    : healthStatus === "online"
+      ? "Website online"
+      : healthStatus === "offline"
+        ? "Website offline"
+        : "Chưa xác định";
+  const healthClasses =
+    healthStatus === "online"
+      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+      : healthStatus === "offline"
+        ? "border-red-500/30 bg-red-500/10 text-red-300"
+        : "border-amber-500/30 bg-amber-500/10 text-amber-200";
 
   return (
     <div
@@ -61,7 +111,7 @@ function WebsiteCard({
       }`}
     >
       <div>
-        <div className="flex justify-between items-start mb-4">
+        <div className="mb-4 flex flex-col items-start justify-between gap-3 sm:flex-row">
           <div className="flex-1 min-w-0 pr-3">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-extrabold text-white text-base leading-tight">{web.name}</h3>
@@ -84,18 +134,56 @@ function WebsiteCard({
             </a>
           </div>
 
-          {/* Status Indicator */}
+          <div className="flex w-full flex-row items-stretch gap-2 sm:w-auto sm:flex-col sm:items-end">
+            <button
+              type="button"
+              onClick={() => health.refetch()}
+              disabled={health.isFetching}
+              className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border px-3 text-[9px] font-extrabold uppercase tracking-widest transition-colors disabled:cursor-wait sm:flex-none ${healthClasses}`}
+              title={health.data?.message || "Kiểm tra trạng thái website"}
+              aria-label={`${healthLabel}. Nhấn để kiểm tra lại`}
+            >
+              {health.isFetching ? (
+                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Activity className="h-3.5 w-3.5" />
+              )}
+              {healthLabel}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onToggleStatus(web._id, web.status)}
+              className={`flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border px-3 text-[9px] font-extrabold uppercase tracking-widest transition-colors sm:flex-none ${
+                web.status === "active"
+                  ? "border-sky-500/30 bg-sky-500/10 text-sky-300 hover:bg-sky-500/15"
+                  : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+              }`}
+              title="Bật hoặc tắt việc nhận dữ liệu tracking"
+            >
+              <Power className="h-3.5 w-3.5" />
+              {web.status === "active" ? "Tracking bật" : "Tracking tắt"}
+            </button>
+          </div>
+        </div>
+
+        <div className={`mb-3 flex items-center justify-between gap-3 rounded-xl border px-3 py-2.5 text-[11px] ${healthClasses}`}>
+          <div className="min-w-0">
+            <p className="font-bold">{health.data?.message || (health.error ? "Không thể chạy health check" : "Đang kết nối tới website...")}</p>
+            <p className="mt-0.5 truncate opacity-75">
+              {health.data
+                ? `${health.data.statusCode ? `HTTP ${health.data.statusCode} · ` : ""}${health.data.latencyMs}ms · ${health.data.configured ? "URL tùy chỉnh" : "URL frontend mặc định"}`
+                : web.healthCheckUrl || `https://${web.domain}`}
+            </p>
+          </div>
           <button
-            onClick={() => onToggleStatus(web._id, web.status)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[9px] font-extrabold uppercase tracking-widest transition-all duration-200 border ${
-              web.status === "active"
-                ? "bg-emerald-950/40 border-emerald-900/50 text-emerald-400 hover:bg-emerald-900/40"
-                : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-            }`}
-            title="Click để thay đổi trạng thái"
+            type="button"
+            onClick={() => onConfigureHealth(web)}
+            className="flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center rounded-lg border border-current/20 transition hover:bg-white/10"
+            title="Cấu hình URL health check"
+            aria-label={`Cấu hình health check cho ${web.name}`}
           >
-            <Power className="w-3 h-3" />
-            {web.status === "active" ? "Hoạt động" : "Tắt"}
+            <Settings2 className="h-4 w-4" />
           </button>
         </div>
 
@@ -143,10 +231,13 @@ export default function Websites() {
   const [isAdding, setIsAdding] = useState(false);
   const [name, setName] = useState("");
   const [domain, setDomain] = useState("");
+  const [healthCheckUrl, setHealthCheckUrl] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   
   // Selection state for integration code modal
   const [selectedWeb, setSelectedWeb] = useState<any>(null);
+  const [healthWeb, setHealthWeb] = useState<any>(null);
+  const [healthError, setHealthError] = useState("");
 
   // 1. Fetch websites list
   const { data: websites = [], isLoading, error } = useQuery({
@@ -165,6 +256,7 @@ export default function Websites() {
       setIsAdding(false);
       setName("");
       setDomain("");
+      setHealthCheckUrl("");
       setErrorMsg("");
       setSelectedWeb(res.data);
     },
@@ -194,13 +286,27 @@ export default function Websites() {
     },
   });
 
+  const healthConfigMutation = useMutation({
+    mutationFn: async ({ id, url }: { id: string; url: string }) =>
+      websiteApi.update(id, { healthCheckUrl: url }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["websites"] });
+      queryClient.invalidateQueries({ queryKey: ["website-health"] });
+      setHealthWeb(null);
+      setHealthError("");
+    },
+    onError: (err: any) => {
+      setHealthError(err.response?.data?.error || "Không thể lưu URL health check");
+    },
+  });
+
   const handleAddWebsite = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !domain) {
       setErrorMsg("Tên và domain là bắt buộc");
       return;
     }
-    createMutation.mutate({ name, domain });
+    createMutation.mutate({ name, domain, healthCheckUrl: healthCheckUrl.trim() });
   };
 
   const handleDelete = (id: string, webName: string) => {
@@ -243,7 +349,7 @@ export default function Websites() {
             </div>
           )}
 
-          <form onSubmit={handleAddWebsite} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+          <form onSubmit={handleAddWebsite} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
             <div className="space-y-1.5">
               <label className="text-[10px] uppercase tracking-wider font-extrabold text-slate-300">Tên Website</label>
               <input
@@ -268,10 +374,24 @@ export default function Websites() {
               />
             </div>
 
+            <div className="space-y-1.5">
+              <label htmlFor="new-health-url" className="text-[10px] uppercase tracking-wider font-extrabold text-slate-300">
+                URL health check (tùy chọn)
+              </label>
+              <input
+                id="new-health-url"
+                type="url"
+                placeholder="https://backend.example.com/health"
+                value={healthCheckUrl}
+                onChange={(e) => setHealthCheckUrl(e.target.value)}
+                className="min-h-11 w-full bg-white/5 border border-white/10 rounded-xl px-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+              />
+            </div>
+
             <button
               type="submit"
               disabled={createMutation.isPending}
-              className="bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-all duration-150 disabled:opacity-50 h-10 shadow-md shadow-red-600/20"
+              className="min-h-11 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-all duration-150 disabled:opacity-50 shadow-md shadow-red-600/20"
             >
               {createMutation.isPending ? "Đang tạo..." : "Xác nhận tạo"}
             </button>
@@ -308,6 +428,10 @@ export default function Websites() {
               onToggleStatus={handleToggleStatus}
               onDelete={handleDelete}
               onOpenModal={setSelectedWeb}
+              onConfigureHealth={(web) => {
+                setHealthError("");
+                setHealthWeb(web);
+              }}
             />
           ))}
         </div>
@@ -319,7 +443,20 @@ export default function Websites() {
         onClose={() => setSelectedWeb(null)}
         website={selectedWeb}
       />
+      <HealthCheckModal
+        website={healthWeb}
+        isSaving={healthConfigMutation.isPending}
+        errorMessage={healthError}
+        onClose={() => {
+          if (!healthConfigMutation.isPending) setHealthWeb(null);
+        }}
+        onSave={(url) => {
+          if (healthWeb) {
+            setHealthError("");
+            healthConfigMutation.mutate({ id: healthWeb._id, url });
+          }
+        }}
+      />
     </div>
   );
 }
-
