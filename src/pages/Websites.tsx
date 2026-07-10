@@ -37,6 +37,37 @@ function useWebsiteHealth(websiteId: string, healthCheckUrl?: string) {
   });
 }
 
+function getHealthCheckErrorMessage(error: unknown) {
+  const err = error as {
+    code?: string;
+    message?: string;
+    response?: { status?: number; data?: { error?: string } };
+  };
+  const status = err?.response?.status;
+
+  if (status === 404) {
+    return "Không tìm thấy API kiểm tra trạng thái. Có thể backend analytics chưa deploy bản mới.";
+  }
+
+  if (status === 401) {
+    return "Phiên đăng nhập đã hết hạn. Đăng nhập lại để kiểm tra trạng thái website.";
+  }
+
+  if (status === 403) {
+    return "Bạn không có quyền kiểm tra trạng thái website này.";
+  }
+
+  if (status && status >= 500) {
+    return "Máy chủ analytics đang lỗi nên chưa kiểm tra được website. Thử lại sau ít phút.";
+  }
+
+  if (err?.code === "ERR_NETWORK" || err?.message === "Network Error") {
+    return "Không thể kết nối máy chủ analytics để kiểm tra website. Kiểm tra lại backend analytics hoặc kết nối mạng.";
+  }
+
+  return err?.response?.data?.error || "Không thể kiểm tra trạng thái lúc này. Bấm thử lại sau.";
+}
+
 // Hook: fetch recent error count for a single website
 function useWebsiteErrors(websiteId: string) {
   const [errorCount, setErrorCount] = useState(0);
@@ -88,18 +119,24 @@ function WebsiteCard({
   const errorCount = useWebsiteErrors(web._id);
   const health = useWebsiteHealth(web._id, web.healthCheckUrl);
   const healthStatus = health.data?.status;
+  const hasHealthCheckError = Boolean(health.error);
+  const healthErrorMessage = health.error
+    ? getHealthCheckErrorMessage(health.error)
+    : "";
   const healthLabel = health.isFetching
     ? "Đang kiểm tra"
+    : hasHealthCheckError
+      ? "Không kiểm tra được"
     : healthStatus === "online"
-      ? "Website online"
+      ? "Đang hoạt động"
       : healthStatus === "offline"
-        ? "Website offline"
-        : "Chưa xác định";
+        ? "Mất kết nối"
+        : "Chưa kiểm tra";
   const healthClasses =
-    healthStatus === "online"
-      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-      : healthStatus === "offline"
+    hasHealthCheckError || healthStatus === "offline"
         ? "border-red-500/30 bg-red-500/10 text-red-300"
+      : healthStatus === "online"
+        ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
         : "border-amber-500/30 bg-amber-500/10 text-amber-200";
 
   return (
@@ -140,7 +177,7 @@ function WebsiteCard({
               onClick={() => health.refetch()}
               disabled={health.isFetching}
               className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border px-3 text-[9px] font-extrabold uppercase tracking-widest transition-colors disabled:cursor-wait sm:flex-none ${healthClasses}`}
-              title={health.data?.message || "Kiểm tra trạng thái website"}
+              title={healthErrorMessage || health.data?.message || "Kiểm tra trạng thái website"}
               aria-label={`${healthLabel}. Nhấn để kiểm tra lại`}
             >
               {health.isFetching ? (
@@ -169,10 +206,10 @@ function WebsiteCard({
 
         <div className={`mb-3 flex items-center justify-between gap-3 rounded-xl border px-3 py-2.5 text-[11px] ${healthClasses}`}>
           <div className="min-w-0">
-            <p className="font-bold">{health.data?.message || (health.error ? "Không thể chạy health check" : "Đang kết nối tới website...")}</p>
+            <p className="font-bold">{healthErrorMessage || health.data?.message || "Đang kết nối tới website..."}</p>
             <p className="mt-0.5 truncate opacity-75">
               {health.data
-                ? `${health.data.statusCode ? `HTTP ${health.data.statusCode} · ` : ""}${health.data.latencyMs}ms · ${health.data.configured ? "URL tùy chỉnh" : "URL frontend mặc định"}`
+                ? `${health.data.statusCode ? `Mã phản hồi ${health.data.statusCode} · ` : ""}${health.data.latencyMs}ms · ${health.data.configured ? "URL backend/health tùy chỉnh" : "URL frontend mặc định"}`
                 : web.healthCheckUrl || `https://${web.domain}`}
             </p>
           </div>
