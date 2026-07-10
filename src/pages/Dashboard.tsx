@@ -154,7 +154,7 @@ export default function Dashboard() {
     enabled: !!selectedWebId,
     refetchInterval: () => {
       if (document.visibilityState === "hidden") return false;
-      return isSaveDataEnabled() ? 60_000 : 30_000;
+      return isSaveDataEnabled() ? 60_000 : 5_000;
     },
   });
 
