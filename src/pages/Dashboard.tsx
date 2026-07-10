@@ -28,8 +28,57 @@ function DashboardPanelFallback({
   className?: string;
 }) {
   return (
-    <div className={`glass flex items-center justify-center rounded-2xl text-xs font-semibold italic text-slate-400 ${className}`}>
-      {label}
+    <div className={`glass flex flex-col justify-between rounded-2xl p-6 ${className}`} role="status" aria-live="polite">
+      <div>
+        <div className="skeleton-block h-4 w-44" />
+        <div className="skeleton-block mt-3 h-3 w-72 max-w-full" />
+      </div>
+      <div className="space-y-3">
+        <div className="skeleton-block h-24 w-full" />
+        <div className="grid grid-cols-5 gap-3">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className="skeleton-block h-16" />
+          ))}
+        </div>
+      </div>
+      <span className="sr-only">{label}</span>
+    </div>
+  );
+}
+
+function DashboardLoadingSkeleton() {
+  return (
+    <div className="space-y-6" role="status" aria-live="polite">
+      <div className="skeleton-block h-11 w-full max-w-md rounded-full" />
+      <div className="glass rounded-2xl p-4">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="skeleton-block h-10 w-10" />
+            <div className="skeleton-block h-10 w-64 max-w-[65vw]" />
+            <div className="skeleton-block h-10 w-10" />
+          </div>
+          <div className="skeleton-block h-10 w-72 max-w-full" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div key={index} className="glass rounded-2xl p-5">
+            <div className="flex items-start justify-between">
+              <div className="space-y-3">
+                <div className="skeleton-block h-3 w-24" />
+                <div className="skeleton-block h-8 w-28" />
+              </div>
+              <div className="skeleton-block h-10 w-10" />
+            </div>
+            <div className="skeleton-block mt-5 h-5 w-20" />
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <DashboardPanelFallback label="Đang tải biểu đồ..." className="h-[400px] lg:col-span-2" />
+        <DashboardPanelFallback label="Đang tải realtime..." className="h-[400px]" />
+      </div>
+      <span className="sr-only">Đang tải dashboard...</span>
     </div>
   );
 }
@@ -141,14 +190,14 @@ export default function Dashboard() {
   });
 
   // 4. Fetch Breakdowns Query
-  const { data: breakdownsData } = useQuery({
+  const { data: breakdownsData, isLoading: isBreakdownsLoading } = useQuery({
     queryKey: ["breakdowns", queryParams],
     queryFn: () => analyticsApi.getBreakdowns(queryParams),
     enabled: !!selectedWebId,
   });
 
   // 5. Fetch Real-time Status Query with network-friendly polling
-  const { data: realtimeData } = useQuery({
+  const { data: realtimeData, isLoading: isRealtimeLoading, isFetching: isRealtimeFetching } = useQuery({
     queryKey: ["realtime", selectedWebId],
     queryFn: () => analyticsApi.getRealtime(selectedWebId),
     enabled: !!selectedWebId,
@@ -190,9 +239,10 @@ export default function Dashboard() {
   const onlineCount = realtimeData?.data?.onlineCount || 0;
   const realtimeFeed = realtimeData?.data?.feed || [];
   const activePagesRealtime = realtimeData?.data?.activePages || [];
+  const isDashboardBooting = !selectedWebId;
 
   if (isWebsitesLoading) {
-    return <div className="py-20 text-center text-xs text-slate-400 italic">Đang tải cấu hình dự án...</div>;
+    return <DashboardLoadingSkeleton />;
   }
 
   const renderTabSelector = () => (
@@ -256,6 +306,8 @@ export default function Dashboard() {
         <Suspense fallback={<DashboardPanelFallback label="Đang tải trang quản lý website..." />}>
           <Websites />
         </Suspense>
+      ) : isDashboardBooting ? (
+        <DashboardLoadingSkeleton />
       ) : (
         <>
       {/* Top Controls Bar - Sticky on Desktop with blur */}
@@ -413,9 +465,7 @@ export default function Dashboard() {
         {/* Trend line Chart - 2/3 width on large screens */}
         <div className="lg:col-span-2">
           {isChartsLoading ? (
-            <div className="glass h-[400px] flex items-center justify-center text-xs text-slate-400 italic">
-              Đang vẽ biểu đồ xu hướng...
-            </div>
+            <DashboardPanelFallback label="Đang vẽ biểu đồ xu hướng..." className="h-[400px]" />
           ) : (
             <Suspense fallback={<DashboardPanelFallback label="Đang tải thư viện biểu đồ..." className="h-[400px]" />}>
               <ChartTraffic data={charts} />
@@ -426,9 +476,17 @@ export default function Dashboard() {
         {/* Realtime online active users count + details */}
         <div>
           <div className="glass p-6 flex flex-col justify-between h-full min-h-[400px]">
-            <div>
-              <h4 className="text-base font-extrabold text-white">Đang truy cập</h4>
-              <p className="text-xs text-slate-300 font-semibold mt-0.5">Thống kê số lượng phiên truy cập trực tiếp ngay bây giờ</p>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h4 className="text-base font-extrabold text-white">Đang truy cập</h4>
+                <p className="text-xs text-slate-300 font-semibold mt-0.5">Thống kê số lượng phiên truy cập trực tiếp ngay bây giờ</p>
+              </div>
+              {isRealtimeFetching && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-widest text-slate-300">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                  Đang làm mới
+                </span>
+              )}
             </div>
 
             <div className="flex flex-col items-center justify-center my-6">
@@ -450,8 +508,19 @@ export default function Dashboard() {
             {/* Active pages list of online users */}
             <div className="space-y-2.5 max-h-36 overflow-y-auto pr-1">
               <span className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Các trang đang xem:</span>
-              {activePagesRealtime.length === 0 ? (
-                <div className="text-[10px] text-slate-300 italic font-semibold">Không có phiên tích cực</div>
+              {isRealtimeLoading ? (
+                <div className="space-y-2">
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <div key={index} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                      <div className="skeleton-block h-3 w-2/3" />
+                      <div className="skeleton-block h-5 w-9 rounded-lg" />
+                    </div>
+                  ))}
+                </div>
+              ) : activePagesRealtime.length === 0 ? (
+                <div className="dashboard-empty-state rounded-xl px-3 py-3 text-[10px] font-semibold italic text-slate-500 dark:text-slate-300">
+                  Không có phiên tích cực
+                </div>
               ) : (
                 activePagesRealtime.map((ap: any, index: number) => (
                   <div key={index} className="flex justify-between items-center text-xs py-2 px-3 bg-white/5 border border-white/10 rounded-xl">
@@ -482,12 +551,14 @@ export default function Dashboard() {
           columnName="Đường dẫn trang"
           data={breakdowns.pages}
           onFilterClick={setPageFilter}
+          isLoading={isBreakdownsLoading}
         />
 
         <ListBreakdown
           title="Nguồn giới thiệu"
           columnName="Nguồn / Tên miền"
           data={breakdowns.referrers}
+          isLoading={isBreakdownsLoading}
         />
       </div>
 
@@ -500,10 +571,11 @@ export default function Dashboard() {
             data={breakdowns.countries}
             onFilterClick={setCountryFilter}
             heightClass="h-[520px]"
+            isLoading={isBreakdownsLoading}
           />
         </div>
         <div className="lg:col-span-2">
-          <FeedActivity feed={realtimeFeed} />
+          <FeedActivity feed={realtimeFeed} isLoading={isRealtimeLoading} />
         </div>
       </div>
         </>

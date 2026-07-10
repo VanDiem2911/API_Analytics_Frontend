@@ -24,6 +24,7 @@ interface FeedItem {
 
 interface FeedActivityProps {
   feed: FeedItem[];
+  isLoading?: boolean;
 }
 
 // Icon mapper for device types
@@ -51,7 +52,7 @@ const formatRelativeTime = (isoString: string) => {
   return `${day} ngày trước`;
 };
 
-export default function FeedActivity({ feed }: FeedActivityProps) {
+export default function FeedActivity({ feed, isLoading = false }: FeedActivityProps) {
   return (
     <div className="glass p-6 flex flex-col h-[520px]">
       <div className="mb-5 flex items-center justify-between">
@@ -67,8 +68,27 @@ export default function FeedActivity({ feed }: FeedActivityProps) {
 
       {/* Feed list */}
       <div className="flex-1 overflow-y-auto space-y-3 pr-1">
-        {feed.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-xs text-slate-300 italic">
+        {isLoading ? (
+          <div className="space-y-3">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-3.5">
+                <div className="skeleton-block h-8 w-8 shrink-0 rounded-xl" />
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="skeleton-block h-3.5 w-1/3" />
+                    <div className="skeleton-block h-3 w-16" />
+                  </div>
+                  <div className="skeleton-block h-8 w-full rounded-xl" />
+                  <div className="flex gap-2">
+                    <div className="skeleton-block h-5 w-20 rounded-lg" />
+                    <div className="skeleton-block h-5 w-24 rounded-lg" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : feed.length === 0 ? (
+          <div className="dashboard-empty-state h-full flex items-center justify-center rounded-2xl text-xs text-slate-500 dark:text-slate-300 italic">
             Chưa có hoạt động nào được ghi nhận
           </div>
         ) : (

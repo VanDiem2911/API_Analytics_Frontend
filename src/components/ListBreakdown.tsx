@@ -12,6 +12,7 @@ interface ListBreakdownProps {
   data: BreakdownItem[];
   onFilterClick?: (name: string) => void;
   heightClass?: string;
+  isLoading?: boolean;
 }
 
 export default function ListBreakdown({
@@ -20,6 +21,7 @@ export default function ListBreakdown({
   data,
   onFilterClick,
   heightClass = "h-[400px]",
+  isLoading = false,
 }: ListBreakdownProps) {
   const [mounted, setMounted] = useState(false);
 
@@ -81,8 +83,17 @@ export default function ListBreakdown({
 
       {/* Items Scrollable List */}
       <div className="flex-1 overflow-y-auto space-y-2 pr-1">
-        {data.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-xs text-slate-400 italic">
+        {isLoading ? (
+          <div className="space-y-2.5">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5">
+                <div className="skeleton-block h-3.5 w-2/3" />
+                <div className="skeleton-block h-4 w-12 rounded-lg" />
+              </div>
+            ))}
+          </div>
+        ) : data.length === 0 ? (
+          <div className="dashboard-empty-state h-full flex items-center justify-center rounded-2xl text-xs text-slate-500 dark:text-slate-300 italic">
             Không có dữ liệu
           </div>
         ) : (

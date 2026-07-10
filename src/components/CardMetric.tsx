@@ -72,7 +72,7 @@ export default function CardMetric({
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">{title}</span>
           {isLoading ? (
-            <div className="h-7 w-24 bg-slate-100 dark:bg-slate-800 rounded-lg animate-pulse mt-1.5" />
+            <div className="skeleton-block h-7 w-24 mt-1.5" />
           ) : (
             <h3 className="text-2xl font-extrabold tracking-tight text-white mt-1">{value}</h3>
           )}
@@ -85,7 +85,7 @@ export default function CardMetric({
       {/* Bottom Section: Real-time Indicator or Trend Percentage */}
       <div className="mt-2">
         {isLoading ? (
-          <div className="h-4.5 w-16 bg-slate-100 dark:bg-slate-800 rounded-lg animate-pulse" />
+          <div className="skeleton-block h-4 w-16" />
         ) : isOnline ? (
           <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 dark:bg-emerald-950/40 dark:border-emerald-900/50 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-emerald-600 dark:text-emerald-400 animate-pulse-slow uppercase tracking-wider">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>

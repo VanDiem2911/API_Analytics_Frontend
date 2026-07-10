@@ -63,8 +63,10 @@ export default function Layout() {
         muted
         loop
         playsInline
-        className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
+        className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none brightness-[0.86] saturate-[1.08] transition-[filter] duration-500 dark:brightness-[0.28] dark:saturate-[0.72]"
       />
+
+      <div className="fixed inset-0 z-0 pointer-events-none bg-white/10 transition-colors duration-500 dark:bg-black/55" />
 
       {/* Bottom Blur Overlay */}
       <div
