@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { websiteApi, analyticsApi } from "../lib/api";
 import CardMetric from "../components/CardMetric";
-import ChartTraffic from "../components/ChartTraffic";
-import ChartPieBreakdown from "../components/ChartPieBreakdown";
 import ListBreakdown from "../components/ListBreakdown";
 import FeedActivity from "../components/FeedActivity";
-import Websites from "./Websites";
 import {
   Users,
   Eye,
@@ -18,6 +15,31 @@ import {
   RefreshCw,
   LayoutDashboard,
 } from "lucide-react";
+
+const ChartTraffic = lazy(() => import("../components/ChartTraffic"));
+const ChartPieBreakdown = lazy(() => import("../components/ChartPieBreakdown"));
+const Websites = lazy(() => import("./Websites"));
+
+function DashboardPanelFallback({
+  label = "Đang tải dữ liệu...",
+  className = "h-[360px]",
+}: {
+  label?: string;
+  className?: string;
+}) {
+  return (
+    <div className={`glass flex items-center justify-center rounded-2xl text-xs font-semibold italic text-slate-400 ${className}`}>
+      {label}
+    </div>
+  );
+}
+
+function isSaveDataEnabled() {
+  const connection = (navigator as Navigator & {
+    connection?: { saveData?: boolean };
+  }).connection;
+  return Boolean(connection?.saveData);
+}
 
 export default function Dashboard() {
   const queryClient = useQueryClient();
@@ -125,12 +147,15 @@ export default function Dashboard() {
     enabled: !!selectedWebId,
   });
 
-  // 5. Fetch Real-time Status Query (polled every 10s)
+  // 5. Fetch Real-time Status Query with network-friendly polling
   const { data: realtimeData } = useQuery({
     queryKey: ["realtime", selectedWebId],
     queryFn: () => analyticsApi.getRealtime(selectedWebId),
     enabled: !!selectedWebId,
-    refetchInterval: 10000, // auto poll every 10 seconds
+    refetchInterval: () => {
+      if (document.visibilityState === "hidden") return false;
+      return isSaveDataEnabled() ? 60_000 : 30_000;
+    },
   });
 
   const handleRefreshAll = () => {
@@ -215,7 +240,9 @@ export default function Dashboard() {
             </button>
           </div>
         ) : (
-          <Websites />
+          <Suspense fallback={<DashboardPanelFallback label="Đang tải trang quản lý website..." />}>
+            <Websites />
+          </Suspense>
         )}
       </div>
     );
@@ -226,7 +253,9 @@ export default function Dashboard() {
       {renderTabSelector()}
 
       {activeTab === "websites" ? (
-        <Websites />
+        <Suspense fallback={<DashboardPanelFallback label="Đang tải trang quản lý website..." />}>
+          <Websites />
+        </Suspense>
       ) : (
         <>
       {/* Top Controls Bar - Sticky on Desktop with blur */}
@@ -388,7 +417,9 @@ export default function Dashboard() {
               Đang vẽ biểu đồ xu hướng...
             </div>
           ) : (
-            <ChartTraffic data={charts} />
+            <Suspense fallback={<DashboardPanelFallback label="Đang tải thư viện biểu đồ..." className="h-[400px]" />}>
+              <ChartTraffic data={charts} />
+            </Suspense>
           )}
         </div>
 
@@ -438,11 +469,13 @@ export default function Dashboard() {
 
       {/* Breakdowns section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <ChartPieBreakdown
-          title="Thiết bị truy cập"
-          subtitle="Tỷ lệ phân bổ theo loại thiết bị của khách"
-          data={breakdowns.devices}
-        />
+        <Suspense fallback={<DashboardPanelFallback label="Đang tải biểu đồ thiết bị..." />}>
+          <ChartPieBreakdown
+            title="Thiết bị truy cập"
+            subtitle="Tỷ lệ phân bổ theo loại thiết bị của khách"
+            data={breakdowns.devices}
+          />
+        </Suspense>
 
         <ListBreakdown
           title="Trang xem nhiều nhất"
